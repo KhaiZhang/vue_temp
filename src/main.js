@@ -7,10 +7,18 @@ import welcome from './components/welcome.vue'
 import home from './components/home.vue'
 import ToDoList from './components/ToDoList.vue'
 import mine from './components/mine.vue'
+import HelloWorld from './components/HelloWorld.vue'
+import { Button } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+
+Vue.component(Button.name, Button);
+
+
 
 Vue.use(VueRouter)
 
 Vue.use(Vuex)
+
 
 const state = {
   selectTpye:'ALL',
@@ -99,7 +107,8 @@ const actions = {
 const store = new Vuex.Store({
   state,
   mutations,
-  actions
+  actions,
+  HelloWorld
  
 })
 
@@ -107,8 +116,9 @@ const router = new VueRouter({
   routes: [
     // 动态路径参数 以冒号开头
     { path: '/', name: 'welcome' , component: welcome },
+    { path: '/HelloWorld', name: 'HelloWorld' , component: HelloWorld },
     { 
-      path: '/home', 
+      path: '/home/:name', 
       name:'home' , 
       component: home , 
       children: [

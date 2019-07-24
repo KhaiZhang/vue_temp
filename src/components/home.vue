@@ -2,7 +2,7 @@
   <div>
     <div id="top_section">
         <button @click="navigateBack">back</button>
-        <span id="username">{{name}}</span>
+        <span id="username">{{username}}</span>
     </div>
     <div id="content">
         <div class="sub">
@@ -12,6 +12,7 @@
         <div class="main">
             <router-view></router-view>
         </div>
+        <router-link to='/HelloWorld'>dddddddd</router-link>
     </div>
   </div>
 </template>
@@ -38,9 +39,9 @@ export default {
   },
   methods :{
       navigateBack:function(){
-          if(confirm("确认是否退出")){
+          // if(confirm("确认是否退出")){
             this.$router.go(-1);
-          } 
+          // } 
       },
       navigateToTodoList:function(){
           this.$router.replace({name:'ToDoList',params:{name}})
@@ -50,9 +51,29 @@ export default {
           this.$router.replace({name:'mine',params:{name}})
       }
   },
-  mounted:function(){
-    this.name = this.$route.params.name;
-  }
+  // mounted:function(){
+  //   this.name = this.$route.params.name;
+  // },
+   beforeRouteLeave(to,from,next){
+     console.log('beforeRouteLeave')
+     console.log(to.name)
+     console.log(from.name)
+        // if(to.name === 'welcome'){
+           const answer = window.confirm('Do you really want to leave? you have unsaved changes!')
+            if (answer) {
+              next()
+            } else {
+              next(false)
+            }
+        // }
+        // else next();   
+    },
+    beforeRouteUpdate (to, from, next) {
+  // just use `this`
+    to.params.name = this.username;
+      next()
+    }
+
 }
 </script>
 
